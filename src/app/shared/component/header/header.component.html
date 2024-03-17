@@ -1,0 +1,46 @@
+<header>
+   <!-- header inner -->
+   <div class="header">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+               <div class="full">
+                  <div class="center-desk">
+                     <div class="logo">
+                        <a href="index.html">Code Tester</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+               <ul class="btn">
+                  <li routerLinkActive="down_btn" [routerLink]="['/home']"><a>Home</a></li>
+                  <li routerLinkActive="down_btn" [routerLink]="['/records']"><a *ngIf="loggedUser">Records</a></li>
+                  <li routerLinkActive="down_btn" [routerLink]="['/profile']"><a *ngIf="loggedUser">Profile</a></li>
+                  <li routerLinkActive="down_btn" [routerLink]="['/messages']"><a *ngIf="loggedUser && loggedUser.role == 1">Messages</a></li>
+                  <li routerLinkActive="down_btn" [routerLink]="['/login']"><a *ngIf="!loggedUser">Login</a></li>
+                  <li class="logout-btn" *ngIf="loggedUser"><a (click)="user_logout()">Logout</a></li>
+                  <li routerLinkActive="down_btn" [routerLink]="['/signin']"><a *ngIf="!loggedUser">Sign Up</a></li>
+                  <li><a (click)="addCredit()" class="credits-tab" *ngIf="loggedUser" title="Add Credit">Credits:
+                        {{userProfile?.credit_points || 0 }}</a></li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+</header>
+
+
+<div *ngIf="loggedUser" class="chat-area">
+   <div class="message-area" *ngIf="openchat">
+      <div class="heading">Message</div>
+      <div class="body">
+         <div class="msgs">{{msg_input}}</div>
+      </div>
+      <div class="input-area">
+         <input type="text" [(ngModel)]="msg_input">
+         <button (click)="sendMsg()" [disabled]="msg_input.length == 0"><img width="24" height="24" src="https://img.icons8.com/material-outlined/24/sent.png" alt="sent"/></button>
+      </div>
+   </div>
+   <img width="94" height="94" src="https://img.icons8.com/3d-fluency/94/chat.png" alt="chat" (click)="openchat = !openchat"/>
+</div>

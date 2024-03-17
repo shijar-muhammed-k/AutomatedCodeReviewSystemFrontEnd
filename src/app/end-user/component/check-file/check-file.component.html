@@ -1,0 +1,85 @@
+<div id="about" class="about">
+    <div class="container-fluid">
+       <div class="row d_flex">
+          <div class="col-md-5">
+             <div class="about_img">
+                <figure><img src="assets/images/about_img.jpg" alt="#" /></figure>
+             </div>
+          </div>
+          <div class="col-md-7">
+             <div class="titlepage">
+                <div class="upload-files-container" 
+                    (dragenter)="onDragEnter($event)"
+                    (dragover)="onDragOver($event)"
+                    (dragleave)="onDragLeave($event)"
+                    (drop)="onDrop($event)"
+                >
+                   <div  class="drag-file-area" (click)="fileUpload.click()">
+                      <span class="material-icons-outlined upload-icon">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAi0lEQVR4nO2VMQ6AMAzE8vSM/PpYGBgQFApcItlSd7tXqREA8CUZEUs0ltd2ls7y6haRB/JtIvJEvnxEDsiXjcgb8uUi8oF8mYickLdHvCEvV8Sb8vo74gt5uZ/TnivJ8ogAMyzghgXcsIAbFnDDAm5YwA0LuGm/AADAHCp+LnELioDw37L4yQFiiBXLi768iE2ROAAAAABJRU5ErkJggg==">
+                      </span>
+                      <h3 class="dynamic-message"> Drag & drop any file here </h3>
+                      or <br>
+                      <label class="label"><span class="browse-files"> 
+                        <input type="file" class="default-file-input" accept=".py" (change)="onFileUpload($event)" #fileUpload />
+                        <span class="browse-files-text">browse file
+                      </span>
+                      <span> from device</span> </span> </label>
+                   </div>
+                   <div *ngIf="fileUploaded">
+                        {{file.name}}
+                   </div>
+                   <span class="cannot-upload-message"> <span class="material-icons-outlined">error</span> Please
+                   select a file first <span class="material-icons-outlined cancel-alert-button">cancel</span>
+                   </span>
+                   <div class="file-block">
+                      <div class="file-info"> <span class="material-icons-outlined file-icon">description</span>
+                         <span class="file-name"> </span> | <span class="file-size"> </span>
+                      </div>
+                      <span class="material-icons remove-file-icon">delete</span>
+                      <div class="progress-bar"> </div>
+                   </div>
+                   <button type="button" class="upload-button" (click)="checkCode()" [disabled]="!fileUploaded"> Upload </button>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+ <div class="choose" *ngIf="report">
+    <div class="choose_bg">
+       <div class="container">
+          <div class="row">
+             <div class="col-md-12">
+                <div class="row">
+                   <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 padding_right0">
+                      <ul class="easy">
+                         <li class="active"><a href="#">Standared Report</a></li>
+                      </ul>
+                   </div>
+                   <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 padding_left0">
+                     <div class="choose_box">
+                        <i><img src="assets/images/admin.png" alt="#" /></i>
+                        <p [innerHTML]="report"></p>
+                        <button class="code-fix-btn" *ngIf="userLoggedIn" (click)="fix_code()">Fix Your File</button>
+                     </div>
+                  </div>
+                </div>
+                <div class="row mt-25">
+                  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 padding_right0">
+                     <ul class="easy">
+                        <li class="active"><a href="#">Vulnarability Report</a></li>
+                     </ul>
+                  </div>
+                  <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 padding_left0">
+                    <div class="choose_box">
+                       <i><img src="assets/images/admin.png" alt="#" /></i>
+                       <p [innerHTML]="report"></p>
+                    </div>
+                 </div>
+               </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>

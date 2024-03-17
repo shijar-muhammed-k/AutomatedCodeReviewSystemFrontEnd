@@ -1,0 +1,16 @@
+<div class="container card message-container ">
+    <h1 class="message-title">Send A Reply</h1>
+  
+    <form >
+  
+      <label for="subject" class="subject">Subject</label>
+      <input type="text" [(ngModel)]="subject" name="subject" maxlength="45">
+  
+      <label for="message" class="message">Message</label>
+      <textarea name="message" [(ngModel)]="message" cols="30" rows="10" required maxlength="500"></textarea>
+
+      <p class="button-container">
+        <input class="button" type="submit" (click)="sendReply()" value="Send">
+      </p>
+    </form>
+  </div>

@@ -1,0 +1,21 @@
+<h2>Responsive Table</h2>
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+        <tr>
+            <th>SL No:</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Transaction Id</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of paymentHistory; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{item.created_date? item.created_date: '-'}}</td>
+            <td>{{item.amount? item.amount: '-'}}</td>
+            <td>{{item.transcation_id? item.transcation_id: '-'}}</td>
+        </tr>
+        <tbody>
+    </table>
+</div>  
