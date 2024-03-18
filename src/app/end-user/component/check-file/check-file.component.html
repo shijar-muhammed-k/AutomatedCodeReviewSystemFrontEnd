@@ -60,7 +60,7 @@
                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 padding_left0">
                      <div class="choose_box">
                         <i><img src="assets/images/admin.png" alt="#" /></i>
-                        <p [innerHTML]="report"></p>
+                        <p [innerHTML]="report.linter"></p>
                         <button class="code-fix-btn" *ngIf="userLoggedIn" (click)="fix_code()">Fix Your File</button>
                      </div>
                   </div>
@@ -74,7 +74,7 @@
                   <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 padding_left0">
                     <div class="choose_box">
                        <i><img src="assets/images/admin.png" alt="#" /></i>
-                       <p [innerHTML]="report"></p>
+                       <p [innerHTML]="report.vulnerability"></p>
                     </div>
                  </div>
                </div>

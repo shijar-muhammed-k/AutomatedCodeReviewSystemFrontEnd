@@ -32,7 +32,7 @@ export class LoaderService {
     "pbDirection": "ltr",
     "pbThickness": 3,
     "hasProgressBar": true,
-    "text": "Loading",
+    "text": "",
     "textColor": "#000000",
     "textPosition": "center-center",
     "maxTime": -1,

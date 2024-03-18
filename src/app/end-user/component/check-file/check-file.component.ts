@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../core/services/api.service'
 import { UserService } from 'src/app/core/services/user.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-check-file',
@@ -20,7 +21,8 @@ export class CheckFileComponent {
   constructor(
     private api: ApiService,
     private toast: ToastrService,
-    private user: UserService
+    private user: UserService,
+    private loader: LoaderService
     ) {
       user.getUser().subscribe(user => {
         this.userLoggedIn = JSON.parse(user)
@@ -59,12 +61,14 @@ export class CheckFileComponent {
 
 
   checkCode() {
+    this.loader.start();
     const formdata = new FormData;
     formdata.append('file', this.file);
     formdata.append('upload_at', this.formatDateToYYYYMMDD(new Date()));
 
     this.api.getReport(formdata).subscribe(data => {
-      this.report_data = data as ReportInterface
+      this.loader.stop();
+      this.report_data = data as ReportInterface;
       this.report_recieved = true;
       this.report = this.report_data.report;
   });
@@ -79,21 +83,26 @@ export class CheckFileComponent {
   }
 
   fix_code() {
-    let formdata = new FormData();
-    formdata.append('file', this.file);
-    formdata.append('upload_at', this.formatDateToYYYYMMDD(new Date()));
-    formdata.append('user', this.userLoggedIn.id);
-    this.api.fixCode({}, this.report_data.id).subscribe(data => {
-      const url = window.URL.createObjectURL(data);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = this.file.name;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-      this.user.userLoginCheck.next(this.user.userLoginCheck.value);
-    })
+    this.api.getUserProfile(this.userLoggedIn.id).subscribe(data => {
+      if(data['credit_points'] < 10) {
+        this.toast.info('Sorry you have insufficient credit points. Need 10 credit points for one fix')
+        return
+      } else {
+        this.loader.start();
+        this.api.fixCode({}, this.report_data.id).subscribe(data => {
+        this.loader.stop();
+        const url = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = this.file.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        this.user.userLoginCheck.next(this.user.userLoginCheck.value);
+      })
+    }
+    });
   }
 
 }

@@ -4,6 +4,8 @@ import { LoaderService } from 'src/app/core/services/loader.service';
 import { MatDialog } from '@angular/material/dialog'
 import { ModalComponent } from '../modal/modal.component'
 import { UserService } from 'src/app/core/services/user.service';
+import { ToastrService } from 'ngx-toastr';
+import { load } from 'mime';
 
 @Component({
   selector: 'app-history-report',
@@ -18,7 +20,8 @@ export class HistoryReportComponent implements OnInit{
     private api: ApiService,
     private loader: LoaderService,
     private dialog: MatDialog,
-    private user: UserService
+    private user: UserService,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -52,8 +55,10 @@ export class HistoryReportComponent implements OnInit{
   }
 
   fix_code(id) {
+    this.loader.start();
     let file = this.codeHistory.find(element => element.id == id);
     this.api.fixCode({}, id).subscribe(data => {
+      this.loader.stop();
       const url = window.URL.createObjectURL(data);
       const link = document.createElement('a');
       link.href = url;
@@ -64,6 +69,11 @@ export class HistoryReportComponent implements OnInit{
       window.URL.revokeObjectURL(url);
       file.restructured_code = true;
       this.user.userLoginCheck.next(this.user.userLoginCheck.value);
+    }, err => {
+      if(err.status === 500) {
+        this.loader.stop();
+        this.toast.info('Sorry you have insufficient credit points. Need 10 credit points for one fix')
+      }
     })
   }
 
