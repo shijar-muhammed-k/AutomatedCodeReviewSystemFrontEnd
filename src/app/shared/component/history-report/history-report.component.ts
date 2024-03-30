@@ -15,6 +15,8 @@ import { load } from 'mime';
 export class HistoryReportComponent implements OnInit{
 
   codeHistory;
+  pageCount: any;
+  currentPage: number = 1;
 
   constructor(
     private api: ApiService,
@@ -25,10 +27,15 @@ export class HistoryReportComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.getList();
+  }
+  
+  getList(search = '', page = 1) {
     this.loader.start();
-    this.api.getHistory().subscribe((data) => {
+    this.api.getHistory(search, page).subscribe((data) => {
       this.loader.stop();
-      this.codeHistory = data['data'];
+      this.codeHistory = data['results']['data'];
+      this.pageCount = this.calculatePageCount(data['count'])
       this.codeHistory.forEach(element => {
         const timestamp = new Date(element.upload_at);
 
@@ -40,7 +47,7 @@ export class HistoryReportComponent implements OnInit{
       })
     })
   }
-  
+
   showReport(id) {
     console.log(id)
     let data = this.codeHistory.find(element => element.id = id)
@@ -75,6 +82,38 @@ export class HistoryReportComponent implements OnInit{
         this.toast.info('Sorry you have insufficient credit points. Need 10 credit points for one fix')
       }
     })
+  }
+
+  searchUser(event) {
+    this.getList(event.target.value);
+    this.currentPage = 1
+  }
+
+  calculatePageCount(count) {
+    return Math.ceil(count / 10);
+  }
+
+  getPages(): number[] {
+    return Array(this.pageCount).fill(0).map((x, i) => i + 1);
+  }
+
+  changePage(page) {
+    console.log(page)
+    event.preventDefault();
+    if(page === 'previous') {
+      if(this.currentPage == 1) {
+        return
+      }
+      this.currentPage = this.currentPage - 1;
+    } else if(page === 'next') {
+      if (this.currentPage === this.pageCount) {
+        return
+      }
+      this.currentPage = this.currentPage + 1;
+    } else {
+      this.currentPage = page;
+    }
+    this.getList('', this.currentPage)
   }
 
 }

@@ -1,5 +1,8 @@
 <h2>Responsive Table</h2>
 <div class="table-wrapper">
+    <div class="search-box" style="float: right; margin: 5px 0;">
+        <input placeholder="Search User" (keyup)="searchUser($event)" type="text">
+    </div>
     <table class="fl-table">
         <thead>
         <tr>
@@ -27,6 +30,20 @@
             <td>{{item.profession? item.profession : '-'}}</td>
             <td>{{item.credit_points? item.credit_points : '-'}}</td>
             <td>{{item.date_joined? item.date_joined : '-'}}</td>
+        </tr>
+        <tr *ngIf="userList?.length !== 0">
+            <td colspan="10">
+                <nav style="float: right;" aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" (click)="changePage('previous')">Previous</a></li>
+                        <li class="page-item" [ngClass]="{'active': currentPage == count}" *ngFor="let count of getPages()"><a class="page-link" (click)="changePage(count)">{{count}}</a></li>
+                        <li class="page-item"><a class="page-link" (click)="changePage('next')">Next</a></li>
+                    </ul> 
+                </nav>
+            </td>
+        </tr>
+        <tr *ngIf="userList?.length === 0">
+            <td colspan="10" style="text-align: center;">Sorry No List Found</td>
         </tr>
         <tbody>
     </table>

@@ -46,13 +46,13 @@ export class ApiService {
     return this.http.get(url);
   }
 
-  getHistory() {
-    const url = 'review/code/';
+  getHistory(search, page) {
+    const url = `review/code/?search=${search}&page=${page}`;
     return this.http.get(url);
   }
 
-  getUserList() {
-    const url = 'user/profile/';
+  getUserList(search = '', page) {
+    const url = `user/profile/?search=${search}&page=${page}`;
     return this.http.get(url);
   }
 
