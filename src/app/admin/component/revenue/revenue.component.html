@@ -1,0 +1,81 @@
+<h2>Responsive Table</h2>
+
+<div class="container d-flex g-6 mb-6">
+    <div class="col-xl-4 col-sm-6 col-12">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total</span>
+                        <span class="h3 font-bold mb-0">RS {{total_revenue}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-sm-6 col-12">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Today</span>
+                        <span class="h3 font-bold mb-0">RS {{today_data * 10}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-sm-6 col-12">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">This Month</span>
+                        <span class="h3 font-bold mb-0">RS {{this_month_data * 10}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-wrapper">
+    <div class="search-box" style="float: right; margin: 5px 0;">
+        <input placeholder="Search User" (keyup)="searchUser($event)" type="text">
+    </div>
+    <table class="fl-table">
+        <thead>
+            <tr>
+                <th>SL No:</th>
+                <th>Date</th>
+                <th>User</th>
+                <th>Transaction Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of revenueHistory; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{item.created_date? item.created_date: '-'}}</td>
+                <td>{{item.profile.first_name? item.profile.first_name: '-'}}</td>
+                <td>{{item.transaction? item.transaction: '-'}}</td>
+            </tr>
+            <tr *ngIf="revenueHistory?.length !== 0">
+                <td colspan="10">
+                    <nav style="float: right;" aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" (click)="changePage('previous')">Previous</a>
+                            </li>
+                            <li class="page-item" [ngClass]="{'active': currentPage == count}"
+                                *ngFor="let count of getPages()"><a class="page-link"
+                                    (click)="changePage(count)">{{count}}</a></li>
+                            <li class="page-item"><a class="page-link" (click)="changePage('next')">Next</a></li>
+                        </ul>
+                    </nav>
+                </td>
+            </tr>
+            <tr *ngIf="revenueHistory?.length === 0">
+                <td colspan="10" style="text-align: center;">Sorry No List Found</td>
+            </tr>
+        <tbody>
+    </table>
+</div>

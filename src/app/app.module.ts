@@ -28,6 +28,7 @@ import { PaymentReportComponent } from './shared/component/payment-report/paymen
 import { ModalComponent } from './shared/component/modal/modal.component';
 import { FormsModule } from '@angular/forms';
 import { ReplyMessageComponent } from './shared/component/reply-message/reply-message.component';
+import { RevenueComponent } from './admin/component/revenue/revenue.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ReplyMessageComponent } from './shared/component/reply-message/reply-me
     HistoryReportComponent,
     PaymentReportComponent,
     ModalComponent,
-    ReplyMessageComponent
+    ReplyMessageComponent,
+    RevenueComponent
   ],
   imports: [
     BrowserModule,

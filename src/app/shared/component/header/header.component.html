@@ -18,6 +18,7 @@
                   <li routerLinkActive="down_btn" [routerLink]="['/records']"><a *ngIf="loggedUser">Records</a></li>
                   <li routerLinkActive="down_btn" [routerLink]="['/profile']"><a *ngIf="loggedUser">Profile</a></li>
                   <li routerLinkActive="down_btn" [routerLink]="['/messages']"><a *ngIf="loggedUser && loggedUser.role == 1">Messages</a></li>
+                  <li routerLinkActive="down_btn" [routerLink]="['/revenue']"><a *ngIf="loggedUser && loggedUser.role == 1">Revenue</a></li>
                   <li routerLinkActive="down_btn" [routerLink]="['/login']"><a *ngIf="!loggedUser">Login</a></li>
                   <li class="logout-btn" *ngIf="loggedUser"><a (click)="user_logout()">Logout</a></li>
                   <li routerLinkActive="down_btn" [routerLink]="['/signin']"><a *ngIf="!loggedUser">Sign Up</a></li>
@@ -31,7 +32,7 @@
 </header>
 
 
-<div *ngIf="loggedUser" class="chat-area">
+<div *ngIf="loggedUser  && loggedUser.role !== 1" class="chat-area">
    <div class="message-area" *ngIf="openchat">
       <div class="heading">Message</div>
       <div class="body">

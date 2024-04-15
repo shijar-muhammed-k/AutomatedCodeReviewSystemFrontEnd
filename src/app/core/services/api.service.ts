@@ -51,6 +51,11 @@ export class ApiService {
     return this.http.get(url);
   }
 
+  getRevenue(search, page) {
+    const url = `review/balance?search=${search}&page=${page}`;
+    return this.http.get(url);
+  }
+
   getUserList(search = '', page) {
     const url = `user/profile/?search=${search}&page=${page}`;
     return this.http.get(url);

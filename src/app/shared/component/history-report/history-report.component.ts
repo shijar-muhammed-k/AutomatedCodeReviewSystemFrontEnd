@@ -17,6 +17,7 @@ export class HistoryReportComponent implements OnInit{
   codeHistory;
   pageCount: any;
   currentPage: number = 1;
+  sort_option: string = 'all';
 
   constructor(
     private api: ApiService,
@@ -51,7 +52,8 @@ export class HistoryReportComponent implements OnInit{
   showReport(id) {
     console.log(id)
     let data = this.codeHistory.find(element => element.id = id)
-    console.log(data)
+    console.log(data.code_report)
+    data.code_report = JSON.parse(data.code_report);
     this.dialog.open(ModalComponent, {
       width: '600px',
       height: '500px',
@@ -114,6 +116,10 @@ export class HistoryReportComponent implements OnInit{
       this.currentPage = page;
     }
     this.getList('', this.currentPage)
+  }
+
+  userChange(event) {
+    console.log(event.target.value)
   }
 
 }

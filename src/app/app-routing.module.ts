@@ -7,6 +7,7 @@ import { ProfileComponent } from './end-user/component/profile/profile.component
 import { ReportComponent } from './end-user/component/report/report.component'
 import { authGuard } from './core/guard/auth.guard'
 import { MessagesComponent } from './admin/component/messages/messages.component';
+import { RevenueComponent } from './admin/component/revenue/revenue.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent, canActivate: [authGuard]},
   {path: 'records', component: ReportComponent, canActivate: [authGuard]},
   {path: 'messages', component: MessagesComponent, canActivate: [authGuard]},
+  {path: 'revenue', component: RevenueComponent, canActivate: [authGuard]},
 ];
 
 @NgModule({
